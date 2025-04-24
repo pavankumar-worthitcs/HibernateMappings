@@ -1,10 +1,15 @@
 package com.wcs.HibernateMapping.dto;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "companyId")
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +18,6 @@ public class Company {
     private String companyLocation;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<Employee> employeesList;
 
     public Company() {

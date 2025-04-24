@@ -3,6 +3,7 @@ package com.wcs.HibernateMapping.service;
 import com.wcs.HibernateMapping.dao.EmployeeDao;
 import com.wcs.HibernateMapping.dto.Employee;
 import com.wcs.HibernateMapping.dto.IdCard;
+import com.wcs.HibernateMapping.dto.Project;
 import com.wcs.HibernateMapping.repo.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,13 @@ public class EmployeeService {
                     .body("No matching data found ");
         }
         return ResponseEntity.ok(filtered);
+    }
+    public Employee addNewProjectToExistingEmployee(Project newProject, Long employeeId){
+        return employeeDao.addNewProjectToExistingEmployee(newProject,employeeId);
+    }
+
+    public Employee addExistingProjectToExistingEmployee(Long projectId,Long employeeId){
+      return employeeDao.addExistingProjectToExistingEmployee(projectId,employeeId);
     }
 
     public Employee addNewIdCardToExistingEmployee(Long employeeId, IdCard newIdCard){

@@ -23,7 +23,7 @@ public class CompanyDao {
 
     public Company addNewEmployeeToExistingCompany(Long companyId, Employee newEmployee){
         Company dbCompany=fetchCompanyById(companyId);
-        if(dbCompany != null){
+        if(dbCompany != null && ! ( dbCompany.getEmployeesList().contains(newEmployee))){
             newEmployee.setCompany(dbCompany); // setting the current company to new employee
             dbCompany.getEmployeesList().add(newEmployee); //adding them to company list
             return saveCompany(dbCompany);

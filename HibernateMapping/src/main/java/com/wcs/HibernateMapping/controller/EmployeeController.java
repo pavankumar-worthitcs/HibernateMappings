@@ -1,8 +1,9 @@
 package com.wcs.HibernateMapping.controller;
+
 import com.wcs.HibernateMapping.dto.Employee;
 import com.wcs.HibernateMapping.dto.IdCard;
+import com.wcs.HibernateMapping.dto.Project;
 import com.wcs.HibernateMapping.service.EmployeeService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,15 @@ public class EmployeeController {
     @GetMapping("/searchKey")
     public ResponseEntity<Object> searchByKeyword(@RequestParam String keyword){
         return employeeService.searchByKeyword(keyword);
+    }
+    @PutMapping("/addNewProjectToExistingEmployee")
+    public Employee addNewProjectToExistingEmployee(@RequestBody Project newProject,@RequestParam Long employeeId){
+        return employeeService.addNewProjectToExistingEmployee(newProject,employeeId);
+    }
+
+    @PutMapping("/addExistingProjectToExistingEmployee")
+    public Employee addExistingProjectToExistingEmployee(@RequestParam Long projectId,@RequestParam Long employeeId){
+        return employeeService.addExistingProjectToExistingEmployee(projectId,employeeId);
     }
 
     @GetMapping("/fetchEmployeeById")

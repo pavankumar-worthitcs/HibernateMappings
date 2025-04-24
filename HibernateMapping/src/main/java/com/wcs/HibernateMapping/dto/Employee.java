@@ -1,10 +1,13 @@
 package com.wcs.HibernateMapping.dto;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import java.util.Set;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "employeeId")
 public class Employee {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,11 +16,13 @@ public class Employee {
     private Double employeeSalary;
 
     @OneToOne(cascade =CascadeType.ALL)
-    @JsonManagedReference
     private IdCard idCard;
 
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Set<Project> projects;
+
     @ManyToOne
-    @JsonBackReference
     private Company company;
 
     public Employee(Long employeeId, String employeeName, Double employeeSalary) {
@@ -69,6 +74,14 @@ public class Employee {
         this.company = company;
     }
 
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -77,4 +90,5 @@ public class Employee {
                 ", employeeSalary=" + employeeSalary +
                 '}';
     }
+
 }
