@@ -17,7 +17,6 @@ public class IdCard {
     private String idCardNumber;
 
     @OneToOne
-    @JsonBackReference
     private Employee employee;
 
 

@@ -20,6 +20,18 @@ public class EmployeeDao {
         return employeeRepo.save(employee);
     }
 
+    public Employee removeExistingProjectFromExistingEmployee(Long projectId,Long employeeId){
+        Employee dbEmployee =fetchEmployeeById(employeeId);
+        Project dbProject =projectDao.fetchProjectById(projectId);
+        if(dbEmployee!= null && dbProject!=null){
+            dbEmployee.getProjects().remove(dbProject);
+            dbProject.getEmployees().remove(dbEmployee);
+           return  saveEmployee(dbEmployee);
+
+        }
+        return null;
+    }
+
     public Employee addNewProjectToExistingEmployee(Project newProject, Long employeeId){
         Employee dbEmployee =fetchEmployeeById(employeeId);
         if(dbEmployee != null){

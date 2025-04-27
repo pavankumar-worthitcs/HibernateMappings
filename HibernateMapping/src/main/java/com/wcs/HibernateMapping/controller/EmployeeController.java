@@ -27,14 +27,28 @@ public class EmployeeController {
     public ResponseEntity<Object> searchByKeyword(@RequestParam String keyword){
         return employeeService.searchByKeyword(keyword);
     }
+
     @PutMapping("/addNewProjectToExistingEmployee")
     public Employee addNewProjectToExistingEmployee(@RequestBody Project newProject,@RequestParam Long employeeId){
         return employeeService.addNewProjectToExistingEmployee(newProject,employeeId);
     }
 
+    @GetMapping("/searchByAnyKey")
+    public ResponseEntity<Object> searchByAnyKey(@RequestParam String key){
+        if(key.isEmpty()){
+            return ResponseEntity.badRequest().body("Please Enter any data");
+        }
+        return employeeService.searchByAnyKey(key.trim());
+    }
+
     @PutMapping("/addExistingProjectToExistingEmployee")
     public Employee addExistingProjectToExistingEmployee(@RequestParam Long projectId,@RequestParam Long employeeId){
         return employeeService.addExistingProjectToExistingEmployee(projectId,employeeId);
+    }
+
+    @PutMapping("/removeExistingProjectFromExistingEmployee")
+    public Employee removeExistingProjectFromExistingEmployee(@RequestParam Long projectId,@RequestParam Long employeeId){
+        return employeeService.removeExistingProjectFromExistingEmployee(projectId,employeeId);
     }
 
     @GetMapping("/fetchEmployeeById")

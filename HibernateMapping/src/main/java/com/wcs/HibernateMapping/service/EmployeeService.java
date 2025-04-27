@@ -31,9 +31,14 @@ public class EmployeeService {
         List<Employee> filtered = employeeRepo.searchByKeyword(keyword);
         if(filtered.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND.value())
-                    .body("No matching data found ");
+                    .body("No matching data found !");
         }
         return ResponseEntity.ok(filtered);
+    }
+
+
+    public Employee removeExistingProjectFromExistingEmployee(Long projectId,Long employeeId){
+      return employeeDao.removeExistingProjectFromExistingEmployee(projectId,employeeId);
     }
     public Employee addNewProjectToExistingEmployee(Project newProject, Long employeeId){
         return employeeDao.addNewProjectToExistingEmployee(newProject,employeeId);
@@ -46,6 +51,15 @@ public class EmployeeService {
     public Employee addNewIdCardToExistingEmployee(Long employeeId, IdCard newIdCard){
         return employeeDao.addNewIdCardToExistingEmployee(employeeId,newIdCard);
     }
+
+   public ResponseEntity<Object> searchByAnyKey(String key){
+       List<Employee> matchesList = employeeRepo.searchByAnyField(key);
+       if(matchesList.isEmpty()){
+           return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body("No matching data found");
+       }
+       return ResponseEntity.ok(matchesList);
+   }
+
 
     public Employee fetchEmployeeById(Long employeeId) {
         return employeeDao.fetchEmployeeById(employeeId);
